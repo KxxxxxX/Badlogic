@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BadLogic</string>
+    <string name="close_file_fail">Can not close file!</string>
+    <string name="load_file_fail">Can not load file!</string>
+    <string name="no_sdk">No external storage mounted</string>
+    <string name="remove_file_fail">can not remove temporary file</string>
+    <string name="wrong">Something went wrong</string>
+</resources>

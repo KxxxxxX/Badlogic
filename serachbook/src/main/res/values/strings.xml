@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SerachBook</string>
+    <string name="main_manual_title">使用说明</string>
+    <string name="main_manual_content">本应用通过扫描书籍条形码得到该书的详细介绍，包括：书名、作者、出版社、内容介绍等。具体流程如下。\n\n1.按下“扫描”按钮，启动扫描程序，扫描并获取条形码；\n\n2.通过豆瓣书籍API下载该书的详细介绍；\n\n3.显示该书的详细介绍。</string>
+    <string name="main_scan">扫描ISBN</string>
+    <string name="error_message_net_exception">网络连接错误</string>
+    <string name="error_message_book_not_found">图书不存在哦</string>
+    <string name="error_message_default">不知道除了啥错误啊#_#</string>
+    <string name="communicating">通讯中，请稍后哦:-D</string>
+    <string name="book_detail_summary_title">摘要&#160;Summary</string>
+</resources>

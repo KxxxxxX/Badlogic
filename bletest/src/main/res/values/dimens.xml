@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <!-- 第四个LinearLayout -->
+    <dimen name="spo2_LinearLayout4_height">158dp</dimen>
+    <dimen name="spo2_LinearLayout4_width">300dp</dimen>
+    <dimen name="spo2_LinearLayout4_marginLeft">11dp</dimen>
+    <dimen name="spo2_volune_ware_bottomline_height">1dp</dimen>
+    <dimen name="spo2_volune_ware_bottomline_marginLeft">4dp</dimen>
+    <dimen name="spo2_volune_ware_heigth">85dp</dimen>
+    <dimen name="spo2_volune_ware_marginTop">43dp</dimen>
+    <dimen name="spo2_volune_ware_width">209dp</dimen>
+    <dimen name="spo2_LinearLayout3_1_height">320dp</dimen>
+    <dimen name="spo2_LinearLayout3_1_width">209dp</dimen>
+    <dimen name="spo2_LinearLayout3_1_marginLeft">4dp</dimen>
+    <dimen name="spo2_LinearLayout3_1_marginTop">9dp</dimen>
+</resources>

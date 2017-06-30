@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/activity_main"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context="cn.scut.kx.sqltest.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/word"/>
+        <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/detail" android:lines="3"/>
+        <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/insert" android:text="@string/insert"/>
+        <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/key"/>
+        <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/search" android:text="@string/search"/>
+        <ListView android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/show"/>
+    </LinearLayout>
+</RelativeLayout>

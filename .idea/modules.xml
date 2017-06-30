@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BadLogic.iml" filepath="$PROJECT_DIR$/BadLogic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bletest/bletest.iml" filepath="$PROJECT_DIR$/bletest/bletest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messagedemo/messagedemo.iml" filepath="$PROJECT_DIR$/messagedemo/messagedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/serachbook/serachbook.iml" filepath="$PROJECT_DIR$/serachbook/serachbook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sqltest/sqltest.iml" filepath="$PROJECT_DIR$/sqltest/sqltest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zxing/zxing.iml" filepath="$PROJECT_DIR$/zxing/zxing.iml" />
+    </modules>
+  </component>
+</project>

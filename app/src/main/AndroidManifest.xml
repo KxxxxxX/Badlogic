@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.scut.kx.badlogic">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AndroidBasicsStarter" />
+        <activity android:name=".LifeCycleTest" />
+        <activity android:name=".SingleTouchTest" />
+        <activity android:name=".MultiTouchTest" />
+        <activity android:name=".AssetsTest" />
+        <activity android:name=".ExternalStorageTest" />
+        <activity android:name=".SoundPoolTest" />
+        <activity android:name=".MediaPlayerTest" />
+        <activity android:name=".FullScreenTest" />
+        <activity android:name=".RenderViewTest" />
+        <activity android:name=".ShapeTest" />
+        <activity android:name=".BitmapTest" />
+        <activity android:name=".FontTest" />
+        <activity android:name=".SurfaceViewTest" />
+    </application>
+
+</manifest>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:inputType="phone"
+        android:hint="请输入手机号"
+        android:ems="10"
+        android:layout_marginTop="107dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/login_input_phone_et"/>
+    <requestFocus/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:inputType="textPassword"
+        android:hint="请输入验证码"
+        android:layout_marginTop="44dp"
+        android:id="@+id/login_input_code_et"
+        android:layout_below="@+id/login_input_phone_et"
+        android:layout_alignLeft="@+id/login_input_phone_et"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/login_request_code_btn"
+        android:text="获取验证码"
+        android:layout_alignTop="@+id/login_input_code_et"
+        android:layout_alignRight="@+id/login_input_phone_et"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_marginTop="44dp"
+        android:id="@+id/login_commit_btn"
+        android:layout_below="@+id/login_input_code_et"
+        android:layout_alignLeft="@+id/login_input_code_et"
+        android:text="注册"/>
+</RelativeLayout>
