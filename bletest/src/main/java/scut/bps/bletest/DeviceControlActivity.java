@@ -37,6 +37,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
@@ -44,6 +45,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.linheimx.app.library.adapter.DefaultValueAdapter;
+import com.linheimx.app.library.adapter.IValueAdapter;
+import com.linheimx.app.library.charts.LineChart;
+import com.linheimx.app.library.data.Entry;
+import com.linheimx.app.library.data.Line;
+import com.linheimx.app.library.data.Lines;
+import com.linheimx.app.library.model.HighLight;
+import com.linheimx.app.library.model.XAxis;
+import com.linheimx.app.library.model.YAxis;
+import com.linheimx.app.library.utils.RectD;
 
 
 /**
@@ -63,109 +75,128 @@ public class DeviceControlActivity extends Activity {
     private BluetoothLeService mBluetoothLeService;
     private boolean mConnected = false;
     
-    private LinearLayout layout;
-    private volatile List<Point> plist;
-    private volatile List<Double> mlist = new ArrayList<Double>();
-    private volatile double py;
+//    private LinearLayout layout;
+//    private volatile List<Point> plist;
+//    private volatile List<Double> mlist = new ArrayList<Double>();
+//    private volatile double py;
     private int ii = 0;
     private int chartH, chartW;
-    private DrawChart view;
+//    private DrawChart view;
     private int xxx = 15;
     private int xInterval = 20;
+
+    LineChart lineChart;
+    Line line;
+
+    CalThread calThread;
     
      @SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
     	public void handleMessage(Message msg) {
     		if(msg.what == 1) {
-				double ecg = Judge((String)msg.obj);
-    			mlist.add(chartH/2-ecg*400);
-    			py = mlist.get(ii++);
+				double ecg = (double)msg.obj*100;
+                if (Math.abs(ecg) > 300){
+                    return;
+                }
+                Log.e("kx",String.valueOf(ecg));
+                i++;
+                line.addEntry(new Entry(i, ecg));
+                lineChart.notifyDataChanged();
+                if (line.getmXMax() > 1000){
+                    RectD viewport = lineChart.get_currentViewPort();
+                    viewport.right = line.getmXMax();
+                    viewport.left = viewport.right - 1000;
+                    lineChart.set_currentViewPort(viewport);
+                }
+                lineChart.invalidate();
+//    			mlist.add(chartH/2-ecg*400);
+//    			py = mlist.get(ii++);
     		}
     	};
     };
     
+
     
-    
-    public class DrawChart extends View {
-		public DrawChart(Context context) {
-			super(context);
-			plist = new ArrayList<Point>();
-		}
-
-		@SuppressWarnings("deprecation")
-		@Override
-		protected void onDraw(Canvas canvas) {
-			super.onDraw(canvas);
-
-			chartH = (int) (layout.getHeight()*0.8);// layout的高200
-			chartW = layout.getWidth();// layout的宽490
-			xInterval = (int) (layout.getWidth() * 0.040816);
-			// 根据设备屏幕宽度设置画图两点间距，暂不完善
-			if (getWindowManager().getDefaultDisplay().getWidth() > 600) {
-				xxx = 15;
-			} else if (getWindowManager().getDefaultDisplay().getWidth() <= 600
-					&& getWindowManager().getDefaultDisplay().getWidth() >= 300) {
-				xxx = 10;
-			} else {
-				xxx = 5;
-			}
-
-			prepareLine();
-			drawCurve(canvas);
-			invalidate();
-		}
-
-		// 画线
-		@SuppressWarnings("deprecation")
-		private void drawCurve(Canvas canvas) {
-			Paint paint = new Paint();
-			paint.setColor(Color.WHITE);
-			// 根据设备屏幕宽度设置画笔大小，暂不完善
-			if (getWindowManager().getDefaultDisplay().getWidth() > 600) {
-				paint.setStrokeWidth(3);
-			} else if (getWindowManager().getDefaultDisplay().getWidth() <= 600
-					&& getWindowManager().getDefaultDisplay().getWidth() >= 300) {
-				paint.setStrokeWidth(2);
-			} else {
-				paint.setStrokeWidth(1);
-			}
-			paint.setAntiAlias(true);
-			paint.setStrokeCap(Paint.Cap.ROUND);
-			paint.setStrokeJoin(Paint.Join.ROUND);
-			paint.setStyle(Style.STROKE);
-			Path path = new Path();
-			path.reset();
-			path.moveTo(plist.get(0).x, plist.get(0).y);
-			if (plist.size() >= 2) {
-				for (int i = 0; i < plist.size() - 1; i++) {
-					path.lineTo(plist.get(i + 1).x, plist.get(i + 1).y);
-					// 绘制贝赛尔曲线（Path）
-					canvas.drawPath(path, paint);
-				}
-			}
-		}
-
-		// 动态移动
-		private void prepareLine() {
-			Point p = new Point(chartW, (int) py);
-			if (plist.size() > chartW / xxx) {
-
-				plist.remove(0);
-				for (int i = 0; i < chartW / xxx; i++) {
-					if (i == 0)
-						plist.get(i).x -= (xInterval - 2);
-					else
-						plist.get(i).x -= xInterval;
-				}
-				plist.add(p);
-			} else {
-				for (int i = 0; i < plist.size() - 1; i++) {
-					plist.get(i).x -= xInterval;
-				}
-				plist.add(p);
-			}
-		}
-	}
+//    public class DrawChart extends View {
+//		public DrawChart(Context context) {
+//			super(context);
+//			plist = new ArrayList<Point>();
+//		}
+//
+//		@SuppressWarnings("deprecation")
+//		@Override
+//		protected void onDraw(Canvas canvas) {
+//			super.onDraw(canvas);
+//
+//			chartH = (int) (layout.getHeight()*0.8);// layout的高200
+//			chartW = layout.getWidth();// layout的宽490
+//			xInterval = (int) (layout.getWidth() * 0.040816);
+//			// 根据设备屏幕宽度设置画图两点间距，暂不完善
+//			if (getWindowManager().getDefaultDisplay().getWidth() > 600) {
+//				xxx = 15;
+//			} else if (getWindowManager().getDefaultDisplay().getWidth() <= 600
+//					&& getWindowManager().getDefaultDisplay().getWidth() >= 300) {
+//				xxx = 10;
+//			} else {
+//				xxx = 5;
+//			}
+//
+//			prepareLine();
+//			drawCurve(canvas);
+//			invalidate();
+//		}
+//
+//		// 画线
+//		@SuppressWarnings("deprecation")
+//		private void drawCurve(Canvas canvas) {
+//			Paint paint = new Paint();
+//			paint.setColor(Color.WHITE);
+//			// 根据设备屏幕宽度设置画笔大小，暂不完善
+//			if (getWindowManager().getDefaultDisplay().getWidth() > 600) {
+//				paint.setStrokeWidth(3);
+//			} else if (getWindowManager().getDefaultDisplay().getWidth() <= 600
+//					&& getWindowManager().getDefaultDisplay().getWidth() >= 300) {
+//				paint.setStrokeWidth(2);
+//			} else {
+//				paint.setStrokeWidth(1);
+//			}
+//			paint.setAntiAlias(true);
+//			paint.setStrokeCap(Paint.Cap.ROUND);
+//			paint.setStrokeJoin(Paint.Join.ROUND);
+//			paint.setStyle(Style.STROKE);
+//			Path path = new Path();
+//			path.reset();
+//			path.moveTo(plist.get(0).x, plist.get(0).y);
+//			if (plist.size() >= 2) {
+//				for (int i = 0; i < plist.size() - 1; i++) {
+//					path.lineTo(plist.get(i + 1).x, plist.get(i + 1).y);
+//					// 绘制贝赛尔曲线（Path）
+//					canvas.drawPath(path, paint);
+//				}
+//			}
+//		}
+//
+//		// 动态移动
+//		private void prepareLine() {
+//			Point p = new Point(chartW, (int) py);
+//			if (plist.size() > chartW / xxx) {
+//
+//				plist.remove(0);
+//				for (int i = 0; i < chartW / xxx; i++) {
+//					if (i == 0)
+//						plist.get(i).x -= (xInterval - 2);
+//					else
+//						plist.get(i).x -= xInterval;
+//				}
+//				plist.add(p);
+//			} else {
+//				for (int i = 0; i < plist.size() - 1; i++) {
+//					plist.get(i).x -= xInterval;
+//				}
+//				plist.add(p);
+//			}
+//		}
+//	}
 
 	protected double Judge(String c) {
 		// mDataField.append(c+'\n');
@@ -180,9 +211,45 @@ public class DeviceControlActivity extends Activity {
 		}
 		return ((num[0]*1048576.0+num[1]*65536.0+num[2]*4096.0+num[3]*256.0+num[4]*16.0+num[5])-4194304.0)/3058.346;
 	}
+
+
 	
-	
-	
+	class CalThread extends Thread{
+        private   Handler myHandler;
+
+        @Override
+        public void run() {
+            Looper.prepare();
+            myHandler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == 123){
+                        String data = (String)msg.obj;
+                        if (data != null) {
+                            String[] s = data.split("55AA09", 2);
+                            s1.append(s[0]);
+                            if (s1.length() == 16) {
+                                handler.sendMessage(handler.obtainMessage(1 , Judge(s1.toString())));
+                            } else if (s1.length() > 16){
+                                String[] sin = s1.toString().split("55AA09");
+                                if (sin[0].length() == 16) {
+                                    handler.sendMessage(handler.obtainMessage(1, Judge(sin[0])));
+                                }
+                                if (sin[1].length() == 16) {
+                                    handler.sendMessage(handler.obtainMessage(1, Judge(sin[1])));
+                                }
+                            } else {
+                            }
+                            s1.setLength(0);
+                            s1.append(s[1]);
+                        }
+                    }
+                }
+            };
+            Looper.loop();
+        }
+    }
+
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -237,27 +304,31 @@ public class DeviceControlActivity extends Activity {
             	
             	//String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
             	String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
-            	if (data != null) {
-            		String[] s = data.split("55AA09", 2);
-            		s1.append(s[0]);
-            		if (s1.length() == 16) {
-            			handler.sendMessage(handler.obtainMessage(1, s1.toString()));
-
-            		} else if (s1.length() > 16){
-            			String[] sin = s1.toString().split("55AA09");
-            			if (sin[0].length() == 16) {
-                			handler.sendMessage(handler.obtainMessage(1, sin[0]));
-
-            			}
-            			if (sin[1].length() == 16) {
-                			handler.sendMessage(handler.obtainMessage(1, sin[1]));
-
-            			}
-            		} else {
-            		}
-            		s1.setLength(0);
-            		s1.append(s[1]);
-            	}
+                Message msg = new Message();
+                msg.what = 123;
+                msg.obj = data;
+                calThread.myHandler.sendMessage(msg);
+//            	if (data != null) {
+//            		String[] s = data.split("55AA09", 2);
+//            		s1.append(s[0]);
+//            		if (s1.length() == 16) {
+//            			handler.sendMessage(handler.obtainMessage(1, s1.toString()));
+//
+//            		} else if (s1.length() > 16){
+//            			String[] sin = s1.toString().split("55AA09");
+//            			if (sin[0].length() == 16) {
+//                			handler.sendMessage(handler.obtainMessage(1, sin[0]));
+//
+//            			}
+//            			if (sin[1].length() == 16) {
+//                			handler.sendMessage(handler.obtainMessage(1, sin[1]));
+//
+//            			}
+//            		} else {
+//            		}
+//            		s1.setLength(0);
+//            		s1.append(s[1]);
+//            	}
             	
             	
  /*           	if (data != null) {
@@ -281,6 +352,41 @@ public class DeviceControlActivity extends Activity {
    //     mDataField.setText(R.string.no_data);
     }
 
+    private void setChartDate(LineChart lineChart){
+        HighLight highLight = lineChart.get_HighLight();
+        highLight.setEnable(true);
+        highLight.setxValueAdapter(new IValueAdapter() {
+            @Override
+            public String value2String(double value) {
+                return "X:" + value;
+            }
+        });
+        highLight.setyValueAdapter(new IValueAdapter() {
+            @Override
+            public String value2String(double value) {
+                return "Y:" + value;
+            }
+        });
+
+        XAxis xAxis = lineChart.get_XAxis();
+        xAxis.set_unit("时间");
+        xAxis.set_ValueAdapter(new DefaultValueAdapter(0));
+
+        YAxis yAxis = lineChart.get_YAxis();
+        yAxis.set_unit("心电电压");
+        yAxis.set_ValueAdapter(new DefaultValueAdapter(3));
+
+        line = new Line();
+        line.setDrawCircle(false);
+
+        Lines lines = new Lines();
+        lines.addLine(line);
+
+        lineChart.setLines(lines);
+    }
+
+    int i = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {                                        //初始化
         super.onCreate(savedInstanceState);
@@ -290,14 +396,15 @@ public class DeviceControlActivity extends Activity {
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
-        layout = (LinearLayout) findViewById(R.id.ecg);
-        view = new DrawChart(this);
+  //      layout = (LinearLayout) findViewById(R.id.ecg);
+   //     view = new DrawChart(this);
         
-    	layout.addView(view);
-    	
-    	
-    	
+   // 	layout.addView(view);
 
+        lineChart = (LineChart) findViewById(R.id.chart);
+        setChartDate(lineChart);
+    	calThread = new CalThread();
+        calThread.start();
         getActionBar().setTitle(mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);

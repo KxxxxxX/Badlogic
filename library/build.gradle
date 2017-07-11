@@ -1,15 +1,24 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+ext {
+    PUBLISH_GROUP_ID = 'com.linheimx.library'
+    PUBLISH_ARTIFACT_ID = 'lchart'
+    PUBLISH_VERSION = '1.2.3'
+}
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
 
     defaultConfig {
-        applicationId "scut.bps.bletest"
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.2.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -23,12 +32,18 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     testCompile 'junit:junit:4.12'
-    compile project(':library')
 }
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

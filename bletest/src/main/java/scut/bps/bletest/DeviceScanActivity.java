@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -102,6 +103,7 @@ public class DeviceScanActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_scan:
+                Log.d("kx","menu_scan");
                 mLeDeviceListAdapter.clear();
                 scanLeDevice(true);
                 break;
@@ -287,6 +289,7 @@ public class DeviceScanActivity extends ListActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.d("kx","onLeScan");
                 	mLeDeviceListAdapter.addDevice(device);
             		mHandler.sendEmptyMessage(1);
                 }

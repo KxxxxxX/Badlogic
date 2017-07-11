@@ -30,6 +30,10 @@
     android:text="@string/no_data"
     android:textSize="16sp" />
 
+    <com.linheimx.app.library.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
 <LinearLayout
     android:background="#38aae4"
     android:id="@+id/ecg"

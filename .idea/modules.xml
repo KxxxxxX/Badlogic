@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/BadLogic.iml" filepath="$PROJECT_DIR$/BadLogic.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bletest/bletest.iml" filepath="$PROJECT_DIR$/bletest/bletest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/messagedemo/messagedemo.iml" filepath="$PROJECT_DIR$/messagedemo/messagedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/serachbook/serachbook.iml" filepath="$PROJECT_DIR$/serachbook/serachbook.iml" />
       <module fileurl="file://$PROJECT_DIR$/sqltest/sqltest.iml" filepath="$PROJECT_DIR$/sqltest/sqltest.iml" />
